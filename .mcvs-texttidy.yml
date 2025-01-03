@@ -1,0 +1,24 @@
+---
+forbidden:
+  - someWord
+  - someWORD
+ignore:
+  dirs:
+    - .git
+    - .golangci.yml
+    - .task
+    - .vscode
+  files:
+    - .mcvs-texttidy.yml
+    - LICENSE
+  words:
+    someWord:
+      - file: README.md
+        lines: [42, 84]
+      - file: "path/to/some_file.txt"
+        lines: [126, 168]
+    someWORD:
+      - file: README.md
+        lines: [126, 168]
+      - file: "path/to/another_file.txt"
+        lines: [42, 84]
