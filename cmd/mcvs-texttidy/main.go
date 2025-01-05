@@ -13,8 +13,8 @@ func main() {
 
 	if forbiddenWordStats.FileCount > 0 {
 		log.WithFields(log.Fields{
-			"numberOfFiles": forbiddenWordStats.FileCount,
-			"numberOfWords": forbiddenWordStats.LineCount,
+			"numberOfFiles":                  forbiddenWordStats.FileCount,
+			"numberOfLinesContainingTheWord": forbiddenWordStats.LineCount,
 		}).Fatal("found forbidden words in files")
 	}
 }
