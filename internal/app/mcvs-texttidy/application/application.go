@@ -9,7 +9,7 @@ import (
 )
 
 func CheckFilesForForbiddenWords(
-	config data.Config,
+	config *data.Config,
 	stats *data.ForbiddenWordStats,
 ) error {
 	dirsToSkip := makeSetFromSlice(config.Ignore.Dirs)

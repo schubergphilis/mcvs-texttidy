@@ -9,18 +9,20 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 const textTidyIgnoreFile = ".mcvs-texttidy.yml"
 
+type IgnoreConfig struct {
+	Dirs  []string               `yaml:"dirs"`
+	Files []string               `yaml:"files"`
+	Words map[string][]FileLines `yaml:"words"`
+}
+
 type Config struct {
-	Forbidden []string `yaml:"forbidden"`
-	Ignore    struct {
-		Dirs  []string               `yaml:"dirs"`
-		Files []string               `yaml:"files"`
-		Words map[string][]FileLines `yaml:"words"`
-	} `yaml:"ignore"`
+	Forbidden []string     `yaml:"forbidden"`
+	Ignore    IgnoreConfig `yaml:"ignore"`
 }
 
 type FileLines struct {
@@ -38,21 +40,26 @@ type FileProcessor struct {
 	IgnoreWords    map[string][]FileLines
 }
 
-func ParseYAMLConfig() (Config, error) {
+func ParseYAMLConfig() (_ *Config, err error) {
 	file, err := os.Open(filepath.Clean(textTidyIgnoreFile))
 	if err != nil {
-		return Config{}, fmt.Errorf("failed to open config file: %s. Error: %w", textTidyIgnoreFile, err)
+		return nil, fmt.Errorf("failed to open config file: %s. Error: %w", textTidyIgnoreFile, err)
 	}
-	defer file.Close()
+
+	defer func() {
+		if cerr := file.Close(); cerr != nil {
+			err = fmt.Errorf("unable to close file: %s. Error: %w", textTidyIgnoreFile, cerr)
+		}
+	}()
 
 	fileContent, err := io.ReadAll(file)
 	if err != nil {
-		return Config{}, fmt.Errorf("failed to read config file: %s. Error: %w", textTidyIgnoreFile, err)
+		return nil, fmt.Errorf("failed to read config file: %s. Error: %w", textTidyIgnoreFile, err)
 	}
 
-	var config Config
+	var config *Config
 	if err := yaml.Unmarshal(fileContent, &config); err != nil {
-		return Config{}, fmt.Errorf("failed to unmarshal config file: %s. Error: %w", textTidyIgnoreFile, err)
+		return nil, fmt.Errorf("failed to unmarshal config file: %s. Error: %w", textTidyIgnoreFile, err)
 	}
 
 	return config, nil

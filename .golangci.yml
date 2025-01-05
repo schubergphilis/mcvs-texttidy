@@ -5,6 +5,7 @@ linters:
     - execinquery
     - exportloopref
     - gomnd
+    - testpackage
 linters-settings:
   depguard:
     rules:
@@ -21,6 +22,8 @@ linters-settings:
           - github.com/schubergphilis/mcvs-texttidy/internal/app/mcvs-texttidy/data
           - github.com/schubergphilis/mcvs-texttidy/internal/app/mcvs-texttidy/presentation
           - github.com/sirupsen/logrus
+          - github.com/stretchr/testify/assert
+          - github.com/stretchr/testify/require
         deny:
           - pkg: "log"
             desc: Use 'log "github.com/sirupsen/logrus"' instead
