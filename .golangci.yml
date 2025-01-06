@@ -21,6 +21,7 @@ linters-settings:
           - github.com/schubergphilis/mcvs-texttidy/internal/app/mcvs-texttidy/application
           - github.com/schubergphilis/mcvs-texttidy/internal/app/mcvs-texttidy/data
           - github.com/schubergphilis/mcvs-texttidy/internal/app/mcvs-texttidy/presentation
+          - github.com/schubergphilis/mcvs-texttidy/internal/pkg/constants
           - github.com/sirupsen/logrus
           - github.com/stretchr/testify/assert
           - github.com/stretchr/testify/require
