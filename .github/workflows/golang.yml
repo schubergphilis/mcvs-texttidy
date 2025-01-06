@@ -33,7 +33,7 @@ jobs:
       TASK_X_REMOTE_TASKFILES: 1
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: schubergphilis/mcvs-golang-action@v0.15.5
+      - uses: schubergphilis/mcvs-golang-action@v0.16.0
         with:
           code-coverage-expected: 64.0
           build-tags: ${{ matrix.args.build-tags }}
